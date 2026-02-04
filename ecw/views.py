@@ -55,7 +55,7 @@ def login(request):
         if check_password(password, user.password):
             # Save user id in session
             request.session['user_id'] = user.id
-            request.session.modified = True  # ✅ ensures session is updated
+            request.session.modified = True  
             return redirect('dashboard')
 
         return render(request, 'ecw/login.html', {
@@ -183,15 +183,12 @@ def logout(request):
 
 def place_order(request, item_id):
     user_id = request.session.get('user_id')
-
-    # If session is missing, redirect to login
     if not user_id:
         return redirect('login')
 
     try:
         user = CustomerData.objects.get(id=user_id)
-    except CustomerData.DoesNotExist:
-        # If somehow session has invalid user id, clear it
+    except CustomerData.DoesNotExist
         request.session.flush()
         return redirect('login')
 
@@ -203,7 +200,7 @@ def place_order(request, item_id):
 
     product = products.get(item_id)
     if not product:
-        return redirect('electronics')  # if product id is invalid
+        return redirect('electronics') 
 
     Order.objects.create(
         user=user,
