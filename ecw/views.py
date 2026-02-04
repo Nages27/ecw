@@ -53,7 +53,6 @@ def login(request):
             })
 
         if check_password(password, user.password):
-            # Save user id in session
             request.session['user_id'] = user.id
             request.session.modified = True  
             return redirect('dashboard')
